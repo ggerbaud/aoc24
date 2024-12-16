@@ -19,3 +19,29 @@ func (p Point) Right() Point {
 func (p Point) Left() Point {
 	return Point{X: p.X - 1, Y: p.Y}
 }
+
+type Mover func(p Point) Point
+
+func (m Mover) Revert() Mover {
+	pt := Point{X: 0, Y: 0}
+	if pt.Up() == m(pt) {
+		return Downer
+	}
+	if pt.Down() == m(pt) {
+		return Upper
+	}
+	if pt.Left() == m(pt) {
+		return Righter
+	}
+	if pt.Right() == m(pt) {
+		return Lefter
+	}
+	panic("invalid mover")
+}
+
+var (
+	Upper   = func(p Point) Point { return p.Up() }
+	Downer  = func(p Point) Point { return p.Down() }
+	Lefter  = func(p Point) Point { return p.Left() }
+	Righter = func(p Point) Point { return p.Right() }
+)
