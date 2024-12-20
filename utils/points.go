@@ -20,6 +20,14 @@ func (p Point) Left() Point {
 	return Point{X: p.X - 1, Y: p.Y}
 }
 
+func (p Point) Dist(pt Point) int {
+	return Abs(p.X-pt.X) + Abs(p.Y-pt.Y)
+}
+
+func (p Point) Vect(pt Point) Point {
+	return Point{X: pt.X - p.X, Y: pt.Y - p.Y}
+}
+
 type Mover func(p Point) Point
 
 func (m Mover) Revert() Mover {
@@ -40,8 +48,9 @@ func (m Mover) Revert() Mover {
 }
 
 var (
-	Upper   = func(p Point) Point { return p.Up() }
-	Downer  = func(p Point) Point { return p.Down() }
-	Lefter  = func(p Point) Point { return p.Left() }
-	Righter = func(p Point) Point { return p.Right() }
+	EmptyPoint = Point{}
+	Upper      = func(p Point) Point { return p.Up() }
+	Downer     = func(p Point) Point { return p.Down() }
+	Lefter     = func(p Point) Point { return p.Left() }
+	Righter    = func(p Point) Point { return p.Right() }
 )
